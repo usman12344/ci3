@@ -29,12 +29,22 @@ class Admin extends CI_Controller
 
         $data['role'] = $this->db->get('user_role')->result_array();
 
-        // echo "selamat datang " . $data['user']['name'];
-        $this->load->view('template/header', $data);
-        $this->load->view('template/sidebar', $data);
-        $this->load->view('template/topbar', $data);
-        $this->load->view('admin/role', $data);
-        $this->load->view('template/footer', $data);
+        $this->form_validation->set_rules('role_name', "role_name", 'required');
+
+        if ($this->form_validation->run() == false) {
+            // echo "selamat datang " . $data['user']['name'];
+            $this->load->view('template/header', $data);
+            $this->load->view('template/sidebar', $data);
+            $this->load->view('template/topbar', $data);
+            $this->load->view('admin/role', $data);
+            $this->load->view('template/footer', $data);
+        } else {
+            $this->db->insert('user_role', ['role' => $this->input->post('role_name')]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            New role added!
+          </div>');
+            redirect('admin/role');
+        }
     }
 
     public function roleaccess($role_id)
@@ -74,8 +84,14 @@ class Admin extends CI_Controller
             $this->db->delete('user_access_menu', $data);
         }
 
-        $this->session->set_flashdata('menu', '<div class="alert alert-success" role="alert">
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
         Success Changed!
       </div>');
+    }
+
+    public function hapus($id)
+    {
+        $this->load->model('Menu_model');
+        $this->Menu_model->hapusrole($id);
     }
 }

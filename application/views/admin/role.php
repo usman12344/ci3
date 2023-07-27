@@ -12,7 +12,7 @@
               </div>'
                     ) ?>
 
-                    <?= $this->session->flashdata('menu'); ?>
+                    <?= $this->session->flashdata('message'); ?>
 
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#RoleManagement">
@@ -36,7 +36,7 @@
                                     <td>
                                         <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-warning">access</a>
                                         <a href="" class="badge badge-success">edit</a>
-                                        <a href="" class="badge badge-danger">hapus</a>
+                                        <a href="<?= base_url('admin/hapus/') . $r['id']; ?>" class="badge badge-danger" onclick="return confirm('yakin ?')">hapus</a>
                                     </td>
                                 </tr>
                                 <?php $i++; ?>
@@ -69,7 +69,7 @@
                     <form action="<?= base_url('admin/role'); ?>" method="post">
                         <div class="modal-body">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="menu" name="menu" placeholder="Name Role">
+                                <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Name Role">
                             </div>
 
                         </div>
